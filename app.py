@@ -1,5 +1,5 @@
 import os
-import restaurant_list
+from modules.restaurant import Restaurant
 
 
 def colect_options():
@@ -12,7 +12,7 @@ def colect_options():
 def show_options():
   print("Select a option\n")
   print("1. Create restaurant")
-  print("2. Enable restaurant")
+  print("2. Change restaurant state")
   print("3. List restaurants")
   print("4. Delete restaurant")
   print("5. Leave system")
@@ -29,23 +29,24 @@ def define_path_by_option(option: int):
 
   match option:
     case 1:
-      restaurant_list.register()
+      Restaurant.register()
       restart()
+      # return
     case 2:
-      restaurant_list.enable()
+      Restaurant.change_some_state()
       restart()
+      # return
     case 3:
-      restaurant_list.list()
+      Restaurant.list_all()
       restart()
+      # return
     case 4:
-      restaurant_list.delete()
+      Restaurant.delete()
       restart()
+      # return
     case 5:
       print("Closing app...")
-
       return
-    case _:
-      print("\nInvalid option")
 
 def main():
   show_options()
