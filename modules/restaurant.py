@@ -1,14 +1,17 @@
 import os
 import uuid
 
+from evaluation import Evaluation
+
 class Restaurant:
   all_restaurants:list[Restaurant] = []
 
   def __init__(self, name = '',type = ''):
+    self._id = uuid.uuid4().__str__()
     self._name = name.title()
     self._type = type.capitalize()
     self._active = False
-    self._id = uuid.uuid4().__str__()
+    self._evaluations: list[Evaluation] = []
 
     Restaurant.all_restaurants.append(self)
   
@@ -44,6 +47,8 @@ class Restaurant:
     for restaurant in cls.all_restaurants:
       if(restaurant._id == id):
         return restaurant
+    
+    raise IndexError
       
   @classmethod
   def find_index_by_id(cls, id):
@@ -60,7 +65,6 @@ class Restaurant:
     id = input("Insert the restaurant id you want to change state:\n")
     try:
       founded_restaurant = cls.find_by_id(id)
-      print(founded_restaurant)
       action = "disabled" if founded_restaurant.active else 'enabled'
       founded_restaurant.change_state()
       os.system('cls' if os.name == 'nt' else 'clear')
@@ -76,7 +80,7 @@ class Restaurant:
   def delete(cls):
     if(not cls.has_restaurants()):
       print("No restaurants registered")
-      return        
+      return
 
     id = input("Insert the restaurant id you want to delete:\n")
     try:
@@ -96,8 +100,35 @@ class Restaurant:
     os.system('cls' if os.name == 'nt' else 'clear')
     print("Successfully registered!")
 
+  @classmethod
+  def save_some_client_evaluation(cls):
+    if(not cls.has_restaurants()):
+      print("No restaurants registered")
+      return
+    
+    id = input("Insert the restaurant id you want to add a client evaluation:\n")
+    try:
+      founded_restaurant = cls.find_by_id(id)
 
+      client_name = input("Input the client that gave the feedback name:\n")
+      nps_evaluation = int(input("Input the NPS (1-5) client evalutaion:\n"))
 
+      if(not 0 <  nps_evaluation < 6):
+        raise ValueError("nps out of range")
+
+      evaluation = Evaluation(client=client_name, evaluation=nps_evaluation)
+      founded_restaurant.save_client_evaluation(evaluation=evaluation)
+
+      os.system('cls' if os.name == 'nt' else 'clear')
+
+      print("Evaluation saved!")  
+    except IndexError:
+      print("Invalid restaurant id")
+    except:
+      print("Failed to add evaluation")
+
+  def save_client_evaluation(self, evaluation:Evaluation):
+    self._evaluations.append(evaluation)
 
   
 
@@ -105,3 +136,6 @@ class Restaurant:
 restaraurant1 = Restaurant("Evandro", 'teste')
 restaraurant1 = Restaurant("Evandro", 'teste2')
 
+
+Restaurant.list_all()
+Restaurant.save_some_client_evaluation()
