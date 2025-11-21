@@ -35,7 +35,7 @@ class Restaurant:
     def average_rating(self):
         if not self._ratings:
             return '-'
-        soma_das_notas = sum(rating._nota for rating in self._ratings)
+        soma_das_notas = sum(rating._rate for rating in self._ratings)
         quantidade_de_notas = len(self._ratings)
         media = round(soma_das_notas / quantidade_de_notas, 1)
         return media

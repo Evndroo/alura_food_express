@@ -1,15 +1,16 @@
 
 
+from modules.menu.menu_item import MenuItem
 from modules.restaurant import Restaurant
 
 
-restaurante_praca = Restaurant('praça', 'Gourmet')
-restaurante_praca.receber_avaliacao('Evandro', 10)
-restaurante_praca.receber_avaliacao('User 1', 8)
-restaurante_praca.receber_avaliacao('User 2', 2)
+restaurant1 = Restaurant('praça', 'Gourmet')
+restaurant1.receive_rating('Evandro', 10)
+restaurant1.receive_rating('User 1', 8)
+restaurant1.receive_rating('User 2', 2)
 
 def main():
-    Restaurant.listar_restaurantes()
+    Restaurant.list_restaurants()
 
 if __name__ == '__main__':
     main()
