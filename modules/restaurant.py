@@ -1,3 +1,6 @@
+from modules.menu.beverage import Beverage
+from modules.menu.menu_item import MenuItem
+from modules.menu.plate import Plate
 from modules.rating import Rating
 
 class Restaurant:
@@ -7,7 +10,8 @@ class Restaurant:
         self._name = name.title()
         self._category = category.upper()
         self._active = False
-        self._ratings = []
+        self._ratings:list[float] = []
+        self._menu:list[MenuItem] = []
         Restaurant.restaurants.append(self)
     
     def __str__(self):
@@ -39,3 +43,10 @@ class Restaurant:
         quantidade_de_notas = len(self._ratings)
         media = round(soma_das_notas / quantidade_de_notas, 1)
         return media
+    
+    def add_beverage_to_menu(self, beverage: Beverage):
+        self._menu.append(beverage)
+    
+    def add_plate_to_menu(self, plate: Plate):
+        self._menu.append(plate)
+
